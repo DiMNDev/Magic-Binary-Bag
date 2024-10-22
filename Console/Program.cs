@@ -31,25 +31,21 @@ inventory.Insert(Item06);
 inventory.Insert(Item07);
 inventory.Insert(Item08);
 
+inventory.InOrderTraversal(inventory.Root, new());
+
 int leftHeight = inventory.GetHeight(inventory.Root.Left!);
 int rightHeight = inventory.GetHeight(inventory.Root.Right!);
 Console.WriteLine($"Left-Height: {leftHeight}");
 Console.WriteLine($"Right-Height: {rightHeight}");
 
-inventory.Traverse(inventory.Root!);
+inventory.PreOrderTraversal(inventory.Root!);
 
-bool isBalanced = inventory.CheckBalance(inventory.Root!);
+bool isBalanced = inventory.CheckBalance();
 Console.WriteLine(isBalanced);
-inventory.Delete(Item02.ID);
+inventory.Delete(Item01.ID);
 inventory.Delete(Item07.ID);
-isBalanced = inventory.CheckBalance(inventory.Root!);
+isBalanced = inventory.CheckBalance();
 Console.WriteLine(isBalanced);
 
-inventory.Traverse(inventory.Root!);
-
-leftHeight = inventory.GetHeight(inventory.Root.Left!);
-rightHeight = inventory.GetHeight(inventory.Root.Right!);
-
-Console.WriteLine($"Left-Height: {leftHeight}");
-Console.WriteLine($"Right-Height: {rightHeight}");
+inventory.PreOrderTraversal(inventory.Root!);
 

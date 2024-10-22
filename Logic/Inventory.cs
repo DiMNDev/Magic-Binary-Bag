@@ -143,7 +143,7 @@ public abstract class BinaryTree
         return current;
     }
 
-    public Node Traverse(Node currentNode) //NLR In-Order Traversal
+    public Node PreOrderTraversal(Node currentNode) //NLR Pre-Order Traversal
     {
         if (currentNode == null)
         {
@@ -151,14 +151,25 @@ public abstract class BinaryTree
         }
         if (currentNode.Left != null)
         {
-            Traverse(currentNode.Left);
+            PreOrderTraversal(currentNode.Left);
         }
         if (currentNode.Left != null)
         {
-            Traverse(currentNode.Right);
+            PreOrderTraversal(currentNode.Right);
         }
         Console.WriteLine($"{currentNode.Data.ID}: {currentNode.Data.Name}");
         return currentNode;
+    }
+    public List<Node> InOrderTraversal(Node currentNode, List<Node> nodes) //LNR In-Order Traversal
+    {
+        if (currentNode == null)
+        {
+            return nodes;
+        }
+        InOrderTraversal(currentNode.Left, nodes);
+        Console.WriteLine($"{currentNode.Data.ID}: {currentNode.Data.Name}");
+        InOrderTraversal(currentNode.Right, nodes);
+        return nodes;
     }
     public void Rebalance()
     {
@@ -187,33 +198,23 @@ public abstract class BinaryTree
         {
             return -1;
         }
-        return Math.Max(GetHeight(currentNode.Left!), GetHeight(currentNode.Right!)) + 1;
+        return Math.Max(GetHeight(currentNode.Left!), GetHeight(currentNode.Right!) + 1);
     }
     public bool IsBalanced { get; private set; }
 
-    public bool CheckBalance(Node currentNode, int leftCount = 0, int rightCount = 0)
+    public bool CheckBalance()
     {
-        if (currentNode == null)
+        int leftHeight = GetHeight(Root.Left!);
+        int rightHeight = GetHeight(Root.Right!);
+
+        if (Math.Abs(leftHeight - rightHeight) <= 1)
         {
-            Console.WriteLine($"{leftCount} - {rightCount} = {Math.Abs(leftCount - rightCount)}");
-            if (Math.Abs(leftCount - rightCount) <= 1)
-            {
-                IsBalanced = true;
-            }
-            else
-            {
-                IsBalanced = false;
-            }
+            return true;
         }
-        if (currentNode?.Left != null || currentNode?.Right != null)
+        else
         {
-            CheckBalance(currentNode.Left!, leftCount += 1, rightCount);
-            // Console.WriteLine($"Left: {currentNode.Data.Name}");
-            CheckBalance(currentNode.Right!, leftCount, rightCount += 1);
-            // Console.WriteLine($"Right: {currentNode.Data.Name}");
-        }
-        // Console.WriteLine($"Root: {Root.Data.ID}-{Root.Data.Name}");
-        return IsBalanced;
+            return false;
+        };
     }
     public Item[] SortBy(Sort option) { return new Item[50]; }
     public Node? SearchFor(int Id) { return null; }
